@@ -1,0 +1,290 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* =========================
+   THEME TOKENS
+========================= */
+@theme {
+  /* Core Colors - Stitch Kinetic Observatory */
+  --color-background: #131313;
+  --color-surface: #131313;
+  --color-surface-container-lowest: #0e0e0e;
+  --color-surface-container-low: #1c1b1b;
+  --color-surface-container: #201f1f;
+  --color-surface-container-high: #2a2a2a;
+  --color-surface-container-highest: #353534;
+
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #d8c3ad;
+
+  --color-primary: #f59e0b;
+  --color-primary-container: #f59e0b;
+  --color-on-primary: #472a00;
+
+  --color-secondary: #adc6ff;
+  --color-secondary-container: #0566d9;
+
+  --color-tertiary: #d5c3ff;
+  --color-tertiary-container: #bda2ff;
+
+  --color-outline: rgba(160, 142, 122, 0.15);
+  --color-outline-variant: rgba(83, 68, 52, 0.15);
+
+  /* Typography */
+  --font-headline: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Radius */
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+}
+
+/* =========================
+   BASE STYLES
+========================= */
+@layer base {
+  body {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(62, 207, 142, 0.08), transparent 40%),
+      radial-gradient(circle at 80% 30%, rgba(164, 200, 255, 0.06), transparent 40%),
+      #0b0f1447;
+
+    color: var(--color-on-surface);
+    font-family: var(--font-body);
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* =========================
+   UTILITIES
+========================= */
+@layer utilities {
+
+  /* Glass Panel */
+  .glass-panel {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Surface Cards (IMPORTANT) */
+  .surface-card {
+    background: rgba(18, 24, 33, 0.6);
+    border: 1px solid var(--color-outline);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+  }
+
+  /* Glow Text */
+  .text-glow {
+    text-shadow:
+      0 0 8px rgba(62, 207, 142, 0.4),
+      0 0 20px rgba(62, 207, 142, 0.2);
+  }
+
+  /* Glow Spot (background energy) */
+  .glow-spot {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle,
+        rgba(62, 207, 142, 0.15),
+        transparent 70%);
+    filter: blur(80px);
+    z-index: 0;
+  }
+
+  /* Arena Grid */
+  .arena-grid {
+    background-image: radial-gradient(circle at 2px 2px,
+        rgba(62, 207, 142, 0.03) 1px,
+        transparent 0);
+    background-size: 40px 40px;
+  }
+
+  /* Diagnostic Grid */
+  .diagnostic-grid {
+    background-image:
+      linear-gradient(to right, rgba(62, 207, 142, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(62, 207, 142, 0.08) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* =========================
+     ANIMATIONS
+  ========================= */
+
+  @keyframes float-slow {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    33% {
+      transform: translate3d(30px, -50px, 0) scale(1.05);
+    }
+
+    66% {
+      transform: translate3d(-20px, 20px, 0) scale(0.95);
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes float-slow-reverse {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    33% {
+      transform: translate3d(-30px, 50px, 0) scale(0.95);
+    }
+
+    66% {
+      transform: translate3d(20px, -20px, 0) scale(1.05);
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes drift-grid {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+      transform: translate3d(0, 40px, 0);
+    }
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Animation Classes */
+  .animate-float {
+    animation: float-slow 20s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .animate-float-reverse {
+    animation: float-slow-reverse 25s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .animate-grid-drift {
+    animation: drift-grid 20s linear infinite;
+    will-change: transform;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  /* =========================
+     MARKDOWN PROSE STYLES (REFINED)
+  ========================= */
+  .prose {
+    --tw-prose-body: var(--color-on-surface);
+    --tw-prose-headings: var(--color-primary);
+    --tw-prose-bold: var(--color-primary);
+    --tw-prose-bullets: var(--color-primary);
+    --tw-prose-counters: var(--color-primary);
+    --tw-prose-quotes: var(--color-primary);
+    --tw-prose-code: var(--color-primary);
+    --tw-prose-links: var(--color-secondary);
+    --tw-prose-hr: var(--color-outline);
+    max-width: none !important;
+  }
+
+  .prose p {
+    margin-top: 1.75rem !important;
+    margin-bottom: 1.75rem !important;
+    line-height: 1.8 !important;
+    font-weight: 300;
+  }
+
+  .prose h1, .prose h2, .prose h3, .prose h4 {
+    font-family: var(--font-headline);
+    margin-top: 2.5rem !important;
+    margin-bottom: 1rem !important;
+    font-weight: 700;
+  }
+
+  .prose ul, .prose ol {
+    padding-left: 2rem !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .prose li {
+    margin-top: 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+    padding-left: 0.5rem;
+  }
+
+  .prose li p {
+     margin: 0 !important;
+  }
+
+  /* Code Blocks & Technical Data */
+  .prose pre {
+    background-color: var(--color-surface-container-high) !important;
+    border: 1px solid var(--color-outline-variant) !important;
+    padding: 1.5rem !important;
+    margin: 2rem 0 !important;
+    border-radius: var(--radius-lg) !important;
+    overflow-x: auto;
+  }
+
+  .prose code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    padding: 0.2em 0.4em;
+    background-color: var(--color-surface-container-highest);
+    border-radius: 4px;
+    color: var(--color-primary) !important;
+  }
+
+  .prose pre code {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    color: var(--color-on-surface) !important;
+    font-size: 13px !important;
+    display: block;
+    line-height: 1.6;
+  }
+
+  /* Numbered Lists Styling */
+  .prose ol > li::marker {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  /* Bullet List Styling */
+  .prose ul > li::marker {
+    color: var(--color-primary);
+  }
+}
