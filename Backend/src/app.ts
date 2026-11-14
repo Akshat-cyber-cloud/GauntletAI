@@ -51,11 +51,14 @@ app.post('/use-graph', protect, async (req, res) => {
     if (!query) {
       return res.status(400).json({ error: 'Query is required' });
     }
+    if (!req.user) {
+      return res.status(401).json({ error: 'User not authenticated' });
+    }
     const result = await runGraph(query);
 
     // Auto-save battle to DB
-    const savedBattle = await Battle.create({
-      userId: req.user?._id,
+    const savedBattle: any = await Battle.create({
+      userId: req.user._id,
       query,
       solution_1: {
         name: 'MISTRAL',
